@@ -12,7 +12,7 @@ class WelcomeText extends React.Component {
           <p>Welcome to <em>this</em> grade calculator</p>
         </div>
         <div className='WelcomeText-small'>
-          <p>I really don't know why you're here</p>
+          <p>I really don't know why I made this</p>
         </div>
       </div>
     );
