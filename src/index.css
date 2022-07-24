@@ -1,5 +1,7 @@
 body {
-    background-color: #eeeeee
+    background-color: #EEEEEE;
+    text-align: center;
+    font-family: monospace;
 }
 
 p {
@@ -8,16 +10,15 @@ p {
 }
 
 .WelcomeText {
-    text-align: center;
     padding-top: 200px;
-
-    font-family: monospace;
 }
 
 .WelcomeText-big {
     font-size: 50px;
+    color: #222831;
 }
 
 .WelcomeText-small {
-    font-size: 10px;
+    font-size: 15px;
+    color: #393E46;
 }

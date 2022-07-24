@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
+import Classes from './classes'
+
 class WelcomeText extends React.Component {
   render() {
     return (
@@ -18,10 +20,22 @@ class WelcomeText extends React.Component {
 }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      classNumber: 0,
+    }
+  }
+
+  handleClassNumber = (classNumber) => {
+    this.setState({classNumber: classNumber})
+  }
+
   render() {
     return (
       <div className='App'>
         <WelcomeText />
+        <Classes onClassNumber={this.handleClassNumber} />
       </div>
     );
   }
