@@ -3,12 +3,19 @@ import './grades.css'
 
 function Grades() {
   const [inputFields, setInputFields] = useState([
-    { grade: ''}
+    { semester1: '', semester2: ''},
+    { semester1: '', semester2: ''},
+    { semester1: '', semester2: ''},
+    { semester1: '', semester2: ''},
+    { semester1: '', semester2: ''},
+    { semester1: '', semester2: ''},
+    { semester1: '', semester2: ''},
   ]);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
-    data[index].grade = event.target.value;
+    data[index][event.target.name] = event.target.value;
     setInputFields(data);
   }
 
@@ -25,28 +32,40 @@ function Grades() {
 
   const submit = (event) => {
     event.preventDefault();
+    setSubmitted(true);
     console.log(inputFields);
+  }
+
+  let calculation = null;
+  if (submitted) {
+    calculation = (
+      <div>
+        <p>Hello World!</p>
+      </div>
+    );
   }
 
   return (
     <div className="Grades">
       <div className='Buttons'>
-        <button onClick={addField}>Add another class</button>
-        <button onClick={removeField}>Remove a class</button>
-        <button onClick={submit}>Submit</button>
+        <button onClick={addField}>Add another period</button>
+        <button onClick={removeField}>Remove a period</button>
+        <button onClick={submit}>Calculate</button>
       </div>
       <form onSubmit={submit}>
         {inputFields.map((input, index) => {
           return (
             <div key={index + 1}>
               <label>
-                Insert grade for class {index + 1}
-                <input type='text' value={input.grade} onChange={event => handleFormChange(index, event)} />
+                Insert grades for period {index + 1}:
+                <input type='text' name='semester1' placeholder='Semester 1 grade' value={input.grade} onChange={event => handleFormChange(index, event)} />
+                <input type='text' name='semester2' placeholder='Semester 2 grade' value={input.grade} onChange={event => handleFormChange(index, event)} />
               </label>
             </div> 
           )
         })}
       </form>
+      {calculation}
     </div>
   );
 }
