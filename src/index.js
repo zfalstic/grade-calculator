@@ -2,13 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
+class WelcomeText extends React.Component {
+  render() {
+    return (
+      <div className='WelcomeText'>
+        <div className='WelcomeText-big'>
+          <p>Welcome to <em>this</em> grade calculator</p>
+        </div>
+        <div className='WelcomeText-small'>
+          <p>I really don't know why you're here</p>
+        </div>
+      </div>
+    );
+  }
+}
+
 class App extends React.Component {
   render() {
     return (
       <div className='App'>
-        <p>
-          hello world!
-        </p>
+        <WelcomeText />
       </div>
     );
   }
