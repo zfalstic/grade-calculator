@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className='App'>
+        <p>
+          hello world!
+        </p>
+      </div>
+    );
+  }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-reportWebVitals();
+root.render(<App />);
