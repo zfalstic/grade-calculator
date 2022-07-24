@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-import Classes from './classes'
+import Grades from './grades';
 
 class WelcomeText extends React.Component {
   render() {
@@ -23,19 +23,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      classNumber: 0,
+      classNumber: 7,
     }
   }
 
   handleClassNumber = (classNumber) => {
     this.setState({classNumber: classNumber})
+    console.log(this.state.classNumber);
   }
 
   render() {
     return (
       <div className='App'>
         <WelcomeText />
-        <Classes onClassNumber={this.handleClassNumber} />
+        <Grades />
       </div>
     );
   }
