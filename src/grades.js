@@ -3,13 +3,13 @@ import './grades.css'
 
 function Grades() {
   const [inputFields, setInputFields] = useState([
-    { semester1: '', semester2: ''},
-    { semester1: '', semester2: ''},
-    { semester1: '', semester2: ''},
-    { semester1: '', semester2: ''},
-    { semester1: '', semester2: ''},
-    { semester1: '', semester2: ''},
-    { semester1: '', semester2: ''},
+    { semester1: '', semester2: '', examWeight: ''},
+    { semester1: '', semester2: '', examWeight: ''},
+    { semester1: '', semester2: '', examWeight: ''},
+    { semester1: '', semester2: '', examWeight: ''},
+    { semester1: '', semester2: '', examWeight: ''},
+    { semester1: '', semester2: '', examWeight: ''},
+    { semester1: '', semester2: '', examWeight: ''},
   ]);
   const [submitted, setSubmitted] = useState(false);
 
@@ -20,7 +20,7 @@ function Grades() {
   }
 
   const addField = () => {
-    let newFields = { grade: '' };
+    let newFields = { semester1: '', semester2: '', examWeight: ''};
     setInputFields([...inputFields, newFields]);
   }
 
@@ -58,8 +58,9 @@ function Grades() {
             <div key={index + 1}>
               <label>
                 Insert grades for period {index + 1}:
-                <input type='text' name='semester1' placeholder='Semester 1 grade' value={input.grade} onChange={event => handleFormChange(index, event)} />
-                <input type='text' name='semester2' placeholder='Semester 2 grade' value={input.grade} onChange={event => handleFormChange(index, event)} />
+                <input type='text' name='semester1' placeholder='Semester 1' value={input.semester1} onChange={event => handleFormChange(index, event)} />
+                <input type='text' name='semester2' placeholder='Semester 2' value={input.semester2} onChange={event => handleFormChange(index, event)} />
+                <input type='text' name='examWeight' placeholder='Final weight' value={input.examWeight} onChange={event => handleFormChange(index, event)} />
               </label>
             </div> 
           )
