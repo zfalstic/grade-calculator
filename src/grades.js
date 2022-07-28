@@ -13,87 +13,114 @@ function Grades() {
     { semester1: '', semester2: '', examWeight: '', target: ''},
     { semester1: '', semester2: '', examWeight: '', target: ''},
   ]);
-  const [submitted, setSubmitted] = useState(false);
+  const [results, setResults] = useState([
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ]);
 
   const handleFormChange = (index, event) => {
-    const inputValue = event.target.value;
-    if(isNaN(inputValue)) {
-      alert('Please enter a valid value')
-    } else {
-      let data = [...inputFields];
-      data[index][event.target.name] = inputValue;
-      setInputFields(data);
-    }
-  }
+    let inputValue = event.target.value;
 
-  const handleFormChangeWeight = (index, event) => {
+    if(event.target.name === 'examWeight') {
+      inputValue = inputValue.replace(/[^0123456789%.]/g, '');
+    } else {
+      inputValue = inputValue.replace(/[^0123456789.]/g, '');
+    }
+
     let data = [...inputFields];
-    data[index][event.target.name] = event.target.value;
+    data[index][event.target.name] = inputValue;
     setInputFields(data);
   }
 
   const addField = () => {
     let newFields = { semester1: '', semester2: '', examWeight: '', target: ''};
+    let newResults = '';
+    
     setInputFields([...inputFields, newFields]);
+    setResults([...results, newResults])
   }
 
   const removeField = () => {
     let newFields = [...inputFields];
+    let newResults = [...results];
+
     newFields.pop();
+    newResults.pop();
+
     setInputFields(newFields);
+    setResults(newResults);
+  }
+
+  const parseFields = () => {
+    const currInputFields = [...inputFields];
+    let currResults = [...results];
+    let errors = new Set();
+
+    for(let i = 0; i < currInputFields.length; i++) {
+      let curr = {...currInputFields[i]};
+      
+      if(!isNaN(curr.semester1)) {
+        curr.semester1 = parseFloat(curr.semester1);
+      } else {
+        errors.add(i + 1);
+        continue;
+      }
+
+      if(!isNaN(curr.semester2)) {
+        curr.semester2 = parseFloat(curr.semester2);
+      } else {
+        errors.add(i + 1);
+        continue;
+      }
+
+      if(!isNaN(curr.target)) {
+        curr.target = parseFloat(curr.target);
+      } else {
+        errors.add(i + 1);
+        continue;
+      }
+
+      if(!isNaN(curr.examWeight) && curr.examWeight.charAt(0) === '0' && curr.examWeight.charAt(1) === '.') {
+        curr.examWeight = parseFloat(curr.examWeight);
+      } else if(!isNaN(curr.examWeight)) {
+        curr.examWeight = parseFloat(curr.examWeight) / 100;
+      } else if(curr.examWeight.charAt(curr.examWeight.length - 1) === '%' && curr.examWeight.substring(0, curr.examWeight.length - 1)) {
+        curr.examWeight = parseFloat(curr.examWeight.substring(0, curr.examWeight.length - 1)) / 100;
+      } else {
+        errors.add(i + 1);
+        continue;
+      }
+
+      const n = Calculate(curr);
+      currResults[i] = (Math.round(n * 100) / 100).toString();
+
+      console.log(currResults[i]);
+    }
+
+    setResults(currResults);
+
+    errors.forEach(i => {
+      alert(`Error processing period ${i}`);
+    });
   }
 
   const submit = (event) => {
-    let data = [...inputFields];
+    const data = [...inputFields];
+    const finalResults = [...results];
 
-    for(let i = 0; i < inputFields.length; i++) {
-      const inputValue = inputFields[i].examWeight;
-      if(inputValue.length === 0) {
-        alert('Please enter a valid value');
-        return;
-      }
-
-      let finalInputValue = '';
-
-      if(!isNaN(inputValue) && inputValue.charAt(0) === '0' && inputValue.charAt(1) === '.') {
-        finalInputValue = parseFloat(inputValue);
-      } else if(inputValue.charAt(inputValue.length - 1) === '%') {
-        finalInputValue = parseFloat(inputValue.substring(0, inputValue.length - 1));
-        finalInputValue = finalInputValue / 100;
-        if(finalInputValue > 1) {
-          alert('Final Weight cannot be greater than 100%');
-          return;
-        }
-      } else if(!isNaN(inputValue)) {
-        finalInputValue = parseFloat(inputValue);
-        finalInputValue = finalInputValue / 100;
-        if(finalInputValue > 1) {
-          alert('Final Weight cannot be greater than 100%');
-          return;
-        }
-      } else {
-        alert('Please enter a valid value');
-        return;
-      }
-
-      data[i].examWeight = finalInputValue.toString();
-    }
     event.preventDefault();
 
     setInputFields(data);
-    setSubmitted(true);
-    console.log(inputFields);
-  }
+    setResults(finalResults);
 
-  let calculation = null;
-  if (submitted) {
-    const inputs = inputFields;
-    const results = Calculate(inputs);
-    calculation = (
-      <div>
-        <p>Hello World!</p>
-      </div>
-    );
+    parseFields();
+
+    console.log(inputFields);
   }
 
   return (
@@ -111,14 +138,14 @@ function Grades() {
                 Insert grades for period {index + 1}:
                 <input type='text' name='semester1' placeholder='Semester 1' value={input.semester1} onChange={event => handleFormChange(index, event)} />
                 <input type='text' name='semester2' placeholder='Semester 2' value={input.semester2} onChange={event => handleFormChange(index, event)} />
-                <input type='text' name='examWeight' placeholder='Final weight' value={input.examWeight} onChange={event => handleFormChangeWeight(index, event)} />
+                <input type='text' name='examWeight' placeholder='Final weight' value={input.examWeight} onChange={event => handleFormChange(index, event)} />
                 <input type='text' name='target' placeholder='Target grade' value={input.target} onChange={event => handleFormChange(index, event)} />
+                <p>{results[index]}</p>
               </label>
             </div> 
           )
         })}
       </form>
-      {calculation}
     </div>
   );
 }
