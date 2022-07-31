@@ -63,6 +63,11 @@ function Grades() {
 
     for(let i = 0; i < currInputFields.length; i++) {
       let curr = {...currInputFields[i]};
+
+      if(curr.semester1 === '' || curr.semester2 === '' || curr.examWeight === '' || curr.target === '') {
+        errors.add(i + 1);
+        continue;
+      }
       
       if(!isNaN(curr.semester1)) {
         curr.semester1 = parseFloat(curr.semester1);
@@ -124,7 +129,7 @@ function Grades() {
   }
 
   return (
-    <div className="Grades">
+    <div className='Grades'>
       <div className='Buttons'>
         <button onClick={addField}>Add another period</button>
         <button onClick={removeField}>Remove a period</button>
@@ -135,12 +140,12 @@ function Grades() {
           return (
             <div key={index + 1}>
               <label>
-                Insert grades for period {index + 1}:
+                Class {index + 1}:
                 <input type='text' name='semester1' placeholder='Semester 1' value={input.semester1} onChange={event => handleFormChange(index, event)} />
                 <input type='text' name='semester2' placeholder='Semester 2' value={input.semester2} onChange={event => handleFormChange(index, event)} />
-                <input type='text' name='examWeight' placeholder='Final weight' value={input.examWeight} onChange={event => handleFormChange(index, event)} />
+                <input type='text' name='examWeight' placeholder='Exam weight' value={input.examWeight} onChange={event => handleFormChange(index, event)} />
                 <input type='text' name='target' placeholder='Target grade' value={input.target} onChange={event => handleFormChange(index, event)} />
-                <p>{results[index]}</p>
+                <b className='result'>{results[index]}</b>
               </label>
             </div> 
           )

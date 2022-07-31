@@ -35,3 +35,8 @@ input {
   margin-top: 75px;
   margin-bottom: 200px;
 }
+
+.result {
+  margin-left: 15px;
+  display: inline;
+}
