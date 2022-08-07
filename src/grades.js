@@ -6,20 +6,8 @@ import Calculate from './calculate';
 function Grades() {
   const [inputFields, setInputFields] = useState([
     { semester1: '', semester2: '', examWeight: '', target: ''},
-    { semester1: '', semester2: '', examWeight: '', target: ''},
-    { semester1: '', semester2: '', examWeight: '', target: ''},
-    { semester1: '', semester2: '', examWeight: '', target: ''},
-    { semester1: '', semester2: '', examWeight: '', target: ''},
-    { semester1: '', semester2: '', examWeight: '', target: ''},
-    { semester1: '', semester2: '', examWeight: '', target: ''},
   ]);
   const [results, setResults] = useState([
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
     '',
   ]);
 
